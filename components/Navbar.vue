@@ -29,12 +29,10 @@
                 ref="mobileNav"
                 class="fixed top-0 left-0 w-[75%] h-screen bg-[#B4CCB4] flex flex-col items-center px-8 z-[50] -translate-x-full"
             >
-                <div class="flex flex-col gap-y-6 text-2xl text-[#1A1A1A] mt-35 *:text-left *:cursor-pointer">
+                <div class="flex flex-col gap-y-6 text-2xl text-[#1A1A1A] mt-15 *:text-left *:cursor-pointer">
                     <NuxtLink to="/" @click="closeMenu">Home</NuxtLink>
                     <NuxtLink to="/shop" @click="closeMenu">Shop</NuxtLink>
                     <NuxtLink to="/product" @click="closeMenu">Product</NuxtLink>
-                    <NuxtLink to="/blog" @click="closeMenu">Blog</NuxtLink>
-                    <NuxtLink to="/faq" @click="closeMenu">FAQ</NuxtLink>
                     <NuxtLink to="/about" @click="closeMenu">About Us</NuxtLink>
                     <NuxtLink to="/contact" @click="closeMenu">Contact Us</NuxtLink>
                 </div>
@@ -64,8 +62,6 @@
                 <NuxtLink to="/">Home</NuxtLink>
                 <NuxtLink to="/shop">Shop</NuxtLink>
                 <NuxtLink to="/product">Product</NuxtLink>
-                <NuxtLink to="/blog">Blog</NuxtLink>
-                <NuxtLink to="/faq">FAQ</NuxtLink>
                 <NuxtLink to="/about">About</NuxtLink>
                 <NuxtLink to="/contact">Contact</NuxtLink>
             </div>

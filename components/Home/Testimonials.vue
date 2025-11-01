@@ -2,7 +2,7 @@
     <div class="w-screen bg-[#EDF2EE] lg:px-17.5 px-4 lg:py-20 py-10 mt-20">
         <section class="max-w-[1440px] mx-auto">
             <h1 class="text-[#1A1A1A] font-semibold lg:text-left text-center text-[40px] leading-[120%] mb-[70px]">
-                Client Testimonial
+                Client Testimonials
             </h1>
             <div class="lg:grid lg:grid-cols-3 lg:grid-rows-1 flex flex-col flex-wrap justify-center gap-[24px]">
                 <div v-for="testimonial of testimonials" :key="testimonial.id"
