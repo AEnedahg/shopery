@@ -12,7 +12,7 @@
                 </p>
                 <div class="mt-[20px] mb-[22px]">
                     <div v-for="deliveryFeature of deliveryFeatures"
-                        class="flex gap-x-[8px]"
+                        class="flex gap-x-[8px] mb-[14px]"
                     >
                         <img src="/images/about/check-icon.png" alt="check-icon" 
                             class="size-[20px]"

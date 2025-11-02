@@ -2,12 +2,15 @@
     <div class="bg-white h-[89px] lg:px-17.5 lg:py-7.5 px-4 py-4 w-screen">
         <header class="flex items-center flex-row-reverse h-full justify-between lg:hidden relative">
             <div class="flex gap-x-[4px]">
-                <NuxtLink to="/wishlist">
-                    <IconsWishlist/>
-                </NuxtLink>
                 <div>
-                    <NuxtLink to="/cart">
+                    <NuxtLink to="/cart" class="relative">
                         <IconsCart />
+                        <span
+                            v-if="cart.totalItems > 0"
+                            class="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full px-2 py-[1px]"
+                        >
+                            {{ cart.totalItems }}
+                        </span>
                     </NuxtLink>
                 </div>
             </div>
@@ -29,10 +32,9 @@
                 ref="mobileNav"
                 class="fixed top-0 left-0 w-[75%] h-screen bg-[#B4CCB4] flex flex-col items-center px-8 z-[50] -translate-x-full"
             >
-                <div class="flex flex-col gap-y-6 text-2xl text-[#1A1A1A] mt-15 *:text-left *:cursor-pointer">
+                <div class="flex flex-col gap-y-6 mt-35 text-2xl text-[#1A1A1A] mt-15 *:text-left *:cursor-pointer">
                     <NuxtLink to="/" @click="closeMenu">Home</NuxtLink>
                     <NuxtLink to="/shop" @click="closeMenu">Shop</NuxtLink>
-                    <NuxtLink to="/product" @click="closeMenu">Product</NuxtLink>
                     <NuxtLink to="/about" @click="closeMenu">About Us</NuxtLink>
                     <NuxtLink to="/contact" @click="closeMenu">Contact Us</NuxtLink>
                 </div>
@@ -48,12 +50,15 @@
             </NuxtLink>
 
             <div class="flex gap-x-[4px]">
-                <NuxtLink to="/wishlist">
-                    <IconsWishlist/>
-                </NuxtLink>
                 <div>
-                    <NuxtLink to="/cart">
+                    <NuxtLink to="/cart" class="relative">
                         <IconsCart />
+                        <span
+                            v-if="cart.totalItems > 0"
+                            class="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full px-2 py-[1px]"
+                        >
+                            {{ cart.totalItems }}
+                        </span>
                     </NuxtLink>
                 </div>
             </div>
@@ -61,7 +66,6 @@
             <div class="flex gap-x-6 text-[#1B2534] text-base">
                 <NuxtLink to="/">Home</NuxtLink>
                 <NuxtLink to="/shop">Shop</NuxtLink>
-                <NuxtLink to="/product">Product</NuxtLink>
                 <NuxtLink to="/about">About</NuxtLink>
                 <NuxtLink to="/contact">Contact</NuxtLink>
             </div>
@@ -72,6 +76,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import gsap from 'gsap'
+import { useCartStore } from '~/stores/cart'
+
+const cart = useCartStore()
 
 const mobileNav = ref(null)
 const openMobileNav = ref(false)
