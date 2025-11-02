@@ -16,11 +16,11 @@
                 <div class="flex items-center mt-[12px] justify-between px-[16px] py-[12px]">
                     <div>
                     <small class="text-[14px] text-[#4D4D4D] inline-block mb-[3px]">{{ product.name }}</small>
-                    <p class="text-[16px] text-[#1A1A1A] mb-[3px] font-semibold">{{ product.price }}</p>
+                    <p class="text-[16px] text-[#1A1A1A] mb-[3px] font-semibold">${{ product.price }}</p>
                     <img src="/images/home/featured-products/stars-small.svg" alt="stars rating" />
                     </div>
                     <button
-                    @click.stop="toggleCart(product.id)"
+                    @click="addToCart(product)"
                     class="p-2 rounded-full transition-all duration-300 cursor-pointer"
                     :class="inCart.includes(product.id) ? 'bg-green-500' : 'bg-[#F2F2F2]'"
                     >
@@ -49,15 +49,14 @@ function handleProductClick(id) {
   selectedProduct.value = id
   router.push(`/shop/${id}`)
 }
-const inCart = ref([])
 
-function toggleCart(id) {
-  if (inCart.value.includes(id)) {
-    inCart.value = inCart.value.filter(i => i !== id)
-  } else {
-    inCart.value.push(id)
-  }
+import { useCartStore } from '~/stores/cart'
+const cart = useCartStore()
+
+function addToCart(product) {
+  cart.addToCart(product)
 }
+
 const router = useRouter()
 const selectedProduct = ref(null)
 
@@ -66,91 +65,91 @@ const products = [
         id: 1,
         name: 'Big Potatoes',
         img: '/images/shop/shop-product-one.png',
-        price: '$34.99'
+        price: 34.99
     },
     {
         id: 2,
         name: 'Chanise Cabbage',
         img: '/images/shop/shop-product-two.png',
-        price: '$24.99'
+        price: 24.99
     },
     {
         id: 3,
         name: 'Corn',
         img: '/images/shop/shop-product-three.png',
-        price: '$14.99'
+        price: 14.99
     },
     {
         id: 4,
         name: 'Egg Plant',
         img: '/images/shop/shop-product-four.png',
-        price: '$24.99'
+        price: 24.99
     },
     {
         id: 5,
         name: 'Fresh Cauliflower',
         img: '/images/shop/shop-product-five.png',
-        price: '$14.99'
+        price: 14.99
     },
     {
         id: 6,
         name: 'Green Apple',
         img: '/images/shop/shop-product-six.png',
-        price: '$14.99'
+        price: 14.99
     },
     {
         id: 7,
         name: 'Green Capsicum',
         img: '/images/shop/shop-product-seven.png',
-        price: '$34.99'
+        price: 34.99
     },
     {
         id: 8,
         name: 'Green Chilli',
         img: '/images/shop/shop-product-eight.png',
-        price: '$14.99'
+        price: 14.99
     },
     {
         id: 9,
         name: 'Green Cucumber',
         img: '/images/shop/shop-product-nine.png',
-        price: '$24.99'
+        price: 24.99
     },
     {
         id: 10,
         name: 'Green Lettuce',
         img: '/images/shop/shop-product-ten.png',
-        price: '$14.99'
+        price: 14.99
     },
     {
         id: 11,
         name: 'Ladies Finger',
         img: '/images/shop/shop-product-eleven.png',
-        price: '$14.99'
+        price: 14.99
     },
     {
         id: 12,
         name: 'Red Capsicum',
         img: '/images/shop/shop-product-twelve.png',
-        price: '$34.99'
+        price: 34.99
     },
     {
         id: 13,
         name: 'Red Chilli',
         img: '/images/shop/shop-product-thirteen.png',
-        price: '$14.99'
+        price: 14.99
     },
     {
         id: 14,
         name: 'Red Tomato',
         img: '/images/shop/shop-product-fourteen.png',
-        price: '$24.99'
+        price: 24.99
     },
     {
         id: 15,
         name: 'Fresh Mango',
         img: '/images/shop/shop-product-fifteen.png',
-        price: '$24.99'
+        price: 24.99
     }
 ]
 </script>

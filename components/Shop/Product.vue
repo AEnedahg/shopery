@@ -61,7 +61,7 @@
                         >
                             <button
                             class="bg-[#F2F2F2] w-[50px] rounded-full flex items-center justify-center text-[#1A1A1A] text-[14px] p-[10px]"
-                            @click="decreaseCount"
+                           @click="cart.decrement(item.id)"
                             >
                             -
                             </button>
@@ -70,7 +70,7 @@
 
                             <button
                             class="bg-[#F2F2F2] w-[50px] rounded-full flex items-center justify-center text-[#1A1A1A] text-[14px] p-[10px]"
-                            @click="increaseCount"
+                            @click="cart.increment(item.id)"
                             >
                             +
                             </button>
@@ -80,7 +80,9 @@
                             gap-x-[16px] py-[16px] px-[40px] rounded-[53px] cursor-pointer 
                                 w-[140%]
                             lg:w-[185%]
-                            hover:bg-[#00B207]/90">
+                            hover:bg-[#00B207]/90"
+                            @click="handleAddToCart(product)"
+                            >
                                 Add to Cart
                                 <img src="/images/shop/cart-icon-white.png" alt="white cart icon" 
                                     class="w-[15px]"
@@ -147,18 +149,16 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { ref, computed } from 'vue'
-const route = useRoute()
+const router = useRouter()
+import { useCartStore } from '~/stores/cart'
+
+const cart = useCartStore()
 
 const count = ref(0)
 
-const increaseCount = () => {
-  count.value++
-}
-
-const decreaseCount = () => {
-  if (count.value > 0) {
-    count.value--
-  }
+function handleAddToCart(product) {
+  cart.addToCart(product)
+  router.push('/cart')
 }
 
 const deliveryList = computed(() => [
@@ -182,9 +182,9 @@ const detailedProducts = [
     name: 'Big Potatoes',
     img: '/images/shop/shop-product-one.png',
     shortDesc: "Fresh, hearty potatoes with rich flavor and smooth texture for all cooking styles.",
-    price: '$34.99',
+    price: 34.99,
     discountPercent: 20,
-    originalPrice: '$43.74',
+    originalPrice: 43.74,
     paraOne:
       'Big Potatoes from Shopery are naturally cultivated and harvested at their peak freshness. These potatoes have a rich, earthy taste and a creamy texture that makes them ideal for mashing, roasting, or frying. Perfect for home-cooked meals, they deliver a hearty and satisfying flavor to every dish. Packed with nutrients, they serve as an excellent source of carbohydrates and fiber, giving you the energy you need throughout the day.',
     paraTwo:
@@ -209,9 +209,9 @@ const detailedProducts = [
     name: 'Chanise Cabbage',
     img: '/images/shop/shop-product-two.png',
     shortDesc: "Crisp, leafy cabbage packed with vitamins and perfect for salads or stir-fries.",
-    price: '$24.99',
+    price: 24.99,
     discountPercent: 15,
-    originalPrice: '$29.40',
+    originalPrice: 29.40,
     paraOne:
       'Shopery’s Chanise Cabbage is a fresh, leafy vegetable known for its crunchy texture and slightly sweet taste. It is rich in vitamins C and K, making it a nutritious addition to salads, soups, and stir-fries. Carefully harvested and handled, this cabbage maintains its natural crispness and color. Its tender leaves and mild flavor make it perfect for both raw and cooked dishes.',
     paraTwo:
@@ -236,9 +236,9 @@ const detailedProducts = [
     name: 'Corn',
     img: '/images/shop/shop-product-three.png',
     shortDesc: "Sweet golden corn with tender kernels, ideal for grilling, soups, and salads.",
-    price: '$14.99',
+    price: 14.99,
     discountPercent: 10,
-    originalPrice: '$16.65',
+    originalPrice: 16.65,
     paraOne:
       'Shopery Corn is harvested at the perfect stage to retain its natural sweetness and tenderness. Every kernel bursts with flavor, offering a satisfying crunch whether grilled, boiled, or roasted. It’s a versatile food option suitable for salads, soups, and main dishes. High in fiber and essential vitamins, this corn not only tastes great but also promotes good digestion and overall well-being.',
     paraTwo:
@@ -263,9 +263,9 @@ const detailedProducts = [
     name: 'Egg Plant',
     img: '/images/shop/shop-product-four.png',
     shortDesc: "Firm, glossy eggplants that absorb flavors beautifully for healthy tasty meals.",
-    price: '$24.99',
+    price: 24.99,
     discountPercent: 25,
-    originalPrice: '$33.32',
+    originalPrice: 33.32,
     paraOne:
       'Shopery’s Egg Plant is smooth, firm, and full of flavor. Known for its glossy skin and rich, slightly nutty taste, it is a key ingredient in Mediterranean and Asian cuisines. Whether grilled, fried, or baked, its spongy flesh absorbs flavors beautifully, making it a favorite for creative cooking. It’s low in calories but rich in fiber and antioxidants, contributing to a healthy diet and balanced meals.',
     paraTwo:
@@ -290,9 +290,9 @@ const detailedProducts = [
     name: 'Fresh Cauliflower',
     img: '/images/shop/shop-product-five.png',
     shortDesc: "Mild, nutritious cauliflower with firm florets, great for soups, curries, or roasting.",
-    price: '$14.99',
+    price: 14.99,
     discountPercent: 15,
-    originalPrice: '$17.64',
+    originalPrice: 17.64,
     paraOne:
       'Shopery’s Fresh Cauliflower offers a perfect balance of flavor, texture, and nutrition. Its firm florets and mild taste make it one of the most adaptable vegetables for any dish — from soups and salads to roasted sides and curries. It’s an excellent low-carb substitute for grains and legumes, making it a favorite among healthy eaters. Packed with vitamins C and K, it supports immunity and bone health.',
     paraTwo:
@@ -317,9 +317,9 @@ const detailedProducts = [
     name: 'Green Apple',
     img: '/images/shop/shop-product-six.png',
     shortDesc: "Crisp and tangy green apples full of antioxidants for a fresh daily boost.",
-    price: '$14.99',
+    price: 14.99,
     discountPercent: 10,
-    originalPrice: '$16.65',
+    originalPrice: 16.65,
     paraOne:
       'Shopery Green Apples are crisp, juicy, and perfectly tart — a refreshing snack or a zesty addition to any recipe. These apples are rich in antioxidants, vitamin C, and dietary fiber, making them an excellent choice for maintaining good health. They’re ideal for baking, juicing, or enjoying raw, bringing a fresh crunch to every bite. Grown naturally, they retain their full flavor and nutritional value.',
     paraTwo:
@@ -344,9 +344,9 @@ const detailedProducts = [
     name: 'Green Capsicum',
     img: '/images/shop/shop-product-seven.png',
     shortDesc: "Bright, crunchy capsicum rich in vitamin C and perfect for salads and grills.",
-    price: '$34.99',
+    price: 34.99,
     discountPercent: 20,
-    originalPrice: '$43.74',
+    originalPrice: 43.74,
     paraOne:
       'Shopery Green Capsicum, also known as bell pepper, is crisp, colorful, and versatile. Its refreshing flavor makes it suitable for salads, stir-fries, and grills. Loaded with vitamin C and antioxidants, it enhances your immunity and promotes healthy skin. Each capsicum is freshly picked, ensuring maximum juiciness and flavor retention. It’s a must-have for every kitchen that values freshness and nutrition.',
     paraTwo:
@@ -371,9 +371,9 @@ const detailedProducts = [
     name: 'Green Chilli',
     img: '/images/shop/shop-product-eight.png',
     shortDesc: "Spicy, flavorful green chillies that bring natural heat and zest to your meals.",
-    price: '$14.99',
+    price: 14.99,
     discountPercent: 30,
-    originalPrice: '$21.41',
+    originalPrice: 21.41,
     paraOne:
       'Shopery Green Chilli brings the perfect balance of heat and flavor to your kitchen. Freshly harvested and naturally cultivated, each chilli delivers a sharp, tangy taste that enhances your curries, sauces, and soups. It’s an excellent source of vitamins A and C, which boost immunity and metabolism. Whether chopped, sliced, or blended, this spice adds zest and aroma to every dish.',
     paraTwo:
@@ -398,9 +398,9 @@ const detailedProducts = [
     name: 'Green Cucumber',
     img: '/images/shop/shop-product-nine.png',
     shortDesc: "Cool, refreshing cucumbers that hydrate and add crunch to every healthy dish.",
-    price: '$24.99',
+    price: 24.99,
     discountPercent: 10,
-    originalPrice: '$27.77',
+    originalPrice: 27.77,
     paraOne:
       'Shopery Green Cucumber is cool, crisp, and hydrating. Grown in ideal conditions, these cucumbers retain their juicy freshness and natural sweetness. Perfect for salads, smoothies, or as a light snack, they are rich in antioxidants and water content, helping to maintain hydration and support glowing skin. Their clean flavor and satisfying crunch make them a refreshing addition to every meal.',
     paraTwo:
@@ -425,9 +425,9 @@ const detailedProducts = [
   name: 'Green Lettuce',
   img: '/images/shop/shop-product-ten.png',
   shortDesc: "Fresh, crisp lettuce leaves ideal for light salads, wraps, and nutritious meals.",
-  price: '$19.99',
+  price: 19.99,
   discountPercent: 10,
-  originalPrice: '$22.21',
+  originalPrice: 22.21,
   paraOne:
     'Shopery Green Lettuce is fresh, crisp, and packed with nutrients. Ideal for salads, wraps, and sandwiches, its tender leaves provide a refreshing crunch with every bite. Carefully cultivated to preserve its natural texture and color, it brings both flavor and health benefits to your daily meals.',
   paraTwo:
@@ -452,9 +452,9 @@ const detailedProducts = [
   name: 'Ladies Finger',
   img: '/images/shop/shop-product-eleven.png',
   shortDesc: "Tender okra pods full of nutrients and perfect for curries, soups, and stews.",
-  price: '$16.99',
+  price: 16.99,
   discountPercent: 15,
-  originalPrice: '$19.99',
+  originalPrice: 19.99,
   paraOne:
     'Shopery Ladies Finger, also known as Okra, is tender, flavorful, and rich in essential nutrients. It’s a staple in many cuisines and perfect for stews, soups, and stir-fries. The pods are fresh, slim, and full of natural goodness that adds smoothness and texture to your dishes.',
   paraTwo:
@@ -479,9 +479,9 @@ const detailedProducts = [
   name: 'Red Capsicum',
   img: '/images/shop/shop-product-twelve.png',
     shortDesc: "Sweet, vibrant red capsicum packed with antioxidants for colorful, healthy meals.",
-  price: '$29.99',
+  price: 29.99,
   discountPercent: 20,
-  originalPrice: '$37.49',
+  originalPrice: 37.49,
   paraOne:
     'Shopery Red Capsicum is bright, juicy, and full of sweet flavor. Known for its vibrant color and crisp texture, it adds both taste and visual appeal to your meals. Perfect for grilling, salads, or stir-fries, it’s loaded with vitamin C and antioxidants for a healthy boost.',
   paraTwo:
@@ -506,9 +506,9 @@ const detailedProducts = [
   name: 'Red Chilli',
   img: '/images/shop/shop-product-thirteen.png',
     shortDesc: "Hot and aromatic red chillies that enhance every dish with bold spice and flavor.",
-  price: '$13.99',
+  price: 13.99,
   discountPercent: 25,
-  originalPrice: '$18.65',
+  originalPrice: 18.65,
   paraOne:
     'Shopery Red Chilli delivers fiery heat and bold flavor to your dishes. Freshly harvested and naturally dried, each chilli packs a punch of spice and aroma that enhances your curries, sauces, and stews. It’s a must-have for spice lovers who want authentic heat with natural freshness.',
   paraTwo:
@@ -533,9 +533,9 @@ const detailedProducts = [
   name: 'Red Tomato',
   img: '/images/shop/shop-product-fourteen.png',
     shortDesc: "Juicy, sun-ripened tomatoes rich in lycopene, perfect for sauces and salads.",
-  price: '$17.99',
+  price: 17.99,
   discountPercent: 10,
-  originalPrice: '$19.99',
+  originalPrice: 19.99,
   paraOne:
     'Shopery Red Tomato is juicy, flavorful, and naturally ripened under the sun. Each tomato bursts with freshness, making it perfect for sauces, salads, and soups. It’s rich in lycopene, vitamin C, and antioxidants that support a healthy lifestyle while adding tangy sweetness to your dishes.',
   paraTwo:
@@ -560,9 +560,9 @@ const detailedProducts = [
   name: 'Fresh Mango',
   img: '/images/shop/shop-product-fifteen.png',
     shortDesc: "Sweet tropical mangoes bursting with flavor, ideal for desserts, drinks, and snacks.",
-  price: '$24.99',
+  price: 24.99,
   discountPercent: 25,
-  originalPrice: '$33.32',
+  originalPrice: 33.32,
   paraOne:
     'Shopery Fresh Mango is the king of fruits — juicy, aromatic, and bursting with tropical sweetness. Grown in rich, fertile soil, each mango offers a delightful blend of smooth texture and natural flavor. It’s packed with vitamins A and C, boosting your immunity and supporting radiant skin. Perfect for smoothies, desserts, or eating fresh, Shopery Mango brings a taste of sunshine to your table.',
   paraTwo:
