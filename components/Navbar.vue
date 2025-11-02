@@ -3,15 +3,23 @@
         <header class="flex items-center flex-row-reverse h-full justify-between lg:hidden relative">
             <div class="flex gap-x-[4px]">
                 <div>
-                    <NuxtLink to="/cart" class="relative">
-                        <IconsCart />
-                        <span
-                            v-if="cart.totalItems > 0"
-                            class="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full px-2 py-[1px]"
-                        >
-                            {{ cart.totalItems }}
-                        </span>
-                    </NuxtLink>
+                    <NuxtLink to="/cart" class="relative flex items-center gap-x-2">
+    <IconsCart />
+    <span
+                    v-if="cart.totalItems > 0"
+                    class="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full px-2 py-[1px]"
+                    >
+                    {{ cart.totalItems }}
+                    </span>
+
+                    <!-- ✅ Total Price (show only if there are items) -->
+                    <span
+                    v-if="cart.totalItems > 0"
+                    class="text-[#1A1A1A] font-medium ml-2 text-[14px]"
+                    >
+                    ${{ cart.totalPrice.toFixed(2) }}
+                    </span>
+                </NuxtLink>
                 </div>
             </div>
       
@@ -51,13 +59,21 @@
 
             <div class="flex gap-x-[4px]">
                 <div>
-                    <NuxtLink to="/cart" class="relative">
+                   <NuxtLink to="/cart" class="relative flex items-center gap-x-2">
                         <IconsCart />
                         <span
-                            v-if="cart.totalItems > 0"
-                            class="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full px-2 py-[1px]"
+                        v-if="cart.totalItems > 0"
+                        class="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full px-2 py-[1px]"
                         >
-                            {{ cart.totalItems }}
+                        {{ cart.totalItems }}
+                        </span>
+
+                        <!-- ✅ Total Price (show only if there are items) -->
+                        <span
+                        v-if="cart.totalItems > 0"
+                        class="text-[#1A1A1A] font-medium ml-2 text-[14px]"
+                        >
+                        ${{ cart.totalPrice.toFixed(2) }}
                         </span>
                     </NuxtLink>
                 </div>
@@ -76,7 +92,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import gsap from 'gsap'
-import { useCartStore } from '~/stores/cart'
+import { useCartStore } from '/stores/cart'
 
 const cart = useCartStore()
 

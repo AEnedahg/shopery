@@ -57,37 +57,36 @@
                     <hr class="mt-[20px] mb-[24px] text-[#E5E5E5]"/>
                     <div class="flex flex-wrap items-center gap-[12px]">
                         <div
-                            class="w-[124px] h-[50px] flex justify-between items-center rounded-[170px] border border-[#E5E5E5] p-[8px]"
+                          class="w-[124px] h-[50px] flex justify-between items-center rounded-[170px] border border-[#E5E5E5] p-[8px]"
                         >
-                            <button
+                          <button
                             class="bg-[#F2F2F2] w-[50px] rounded-full flex items-center justify-center text-[#1A1A1A] text-[14px] p-[10px]"
-                           @click="cart.decrement(item.id)"
-                            >
+                            @click="decrementCount"
+                          >
                             -
-                            </button>
+                          </button>
 
-                            <small class="text-[16px] font-medium">{{ count }}</small>
+                          <small class="text-[16px] font-medium">{{ count }}</small>
 
-                            <button
+                          <button
                             class="bg-[#F2F2F2] w-[50px] rounded-full flex items-center justify-center text-[#1A1A1A] text-[14px] p-[10px]"
-                            @click="cart.increment(item.id)"
-                            >
+                            @click="incrementCount"
+                          >
                             +
-                            </button>
+                          </button>
                         </div>
+
                         <NuxtLink to="/shop">
-                            <button class="text-white bg-[#00B207] flex items-center justify-center
+                            <button
+                            class="text-white bg-[#00B207] flex items-center justify-center
                             gap-x-[16px] py-[16px] px-[40px] rounded-[53px] cursor-pointer 
-                                w-[140%]
-                            lg:w-[185%]
-                            hover:bg-[#00B207]/90"
-                            @click="handleAddToCart(product)"
-                            >
-                                Add to Cart
-                                <img src="/images/shop/cart-icon-white.png" alt="white cart icon" 
-                                    class="w-[15px]"
-                                />
-                            </button>
+                            w-[140%] lg:w-[185%] hover:bg-[#00B207]/90"
+                            @click="handleAddToCart(detailedProduct)"
+                          >
+                            Add to Cart
+                            <img src="/images/shop/cart-icon-white.png" alt="white cart icon" class="w-[15px]" />
+                          </button>
+
                         </NuxtLink>
                     </div>
                     <hr class="mt-[20px] mb-[24px] text-[#E5E5E5]"/>
@@ -147,19 +146,33 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
-import { ref, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+const route = useRoute()
 const router = useRouter()
-import { useCartStore } from '~/stores/cart'
-
+import { ref, computed } from 'vue'
+import { useCartStore } from '/stores/cart'
 const cart = useCartStore()
 
-const count = ref(0)
+const count = ref(1)
+
+function incrementCount() {
+  count.value++
+}
+
+function decrementCount() {
+  if (count.value > 1) count.value--
+}
+
 
 function handleAddToCart(product) {
-  cart.addToCart(product)
+  const item = {
+    ...product,
+    quantity: count.value,
+  }
+  cart.addToCart(item)
   router.push('/cart')
 }
+
 
 const deliveryList = computed(() => [
   {

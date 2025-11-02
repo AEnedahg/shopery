@@ -1,12 +1,12 @@
 <template>
-    <Navbar />
-    <slot />
-    <Footer />
+  <Navbar />
+  <slot />
+  <Footer />
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
-import { useCartStore } from '@/stores/cart'
+import { useCartStore } from '/stores/cart' // make sure the path starts with @
 
 const cart = useCartStore()
 
